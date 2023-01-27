@@ -9,7 +9,7 @@ import java.util.Collection;
 @Entity
 @Data
 @Table(name = "roles")
-public class Role implements GrantedAuthority {
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -17,9 +17,9 @@ public class Role implements GrantedAuthority {
 
     @ManyToMany(mappedBy = "roles")
     private Collection<User> users; //добавила на созвоне с Нурсултаном
-
-    @Override
-    public String getAuthority() {
-        return role;
-    }
+//
+//    @Override
+//    public String getAuthority() {
+//        return role;
+//    }
 }

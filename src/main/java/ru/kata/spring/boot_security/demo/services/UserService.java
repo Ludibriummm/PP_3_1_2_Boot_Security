@@ -8,11 +8,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.kata.spring.boot_security.demo.entities.Role;
 import ru.kata.spring.boot_security.demo.entities.User;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
 
+import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -27,28 +30,33 @@ public class UserService implements UserDetailsService {
     public User findByUsername(String username){
         return userRepository.findByUsername(username); //по умолчанию Optional
     }
-    //попробовать поменять на свой собственный метод,создать класс репозитория и по id возвращать
+
     public User findById(Integer id){
         return userRepository.findById(id).orElse(null);
     }
-    //ноль разницы
+
+//    @Override
+//    @Transactional
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        Optional<User> user = Optional.ofNullable(findByUsername(username));
+//        if (user.isEmpty()) {
+//            throw new UsernameNotFoundException(String.format("User '%s' not found", username));
+//        }
+//        return user.get();
+//    }
+
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user = Optional.ofNullable(findByUsername(username));
-        if (user.isEmpty()) {
+        User user = findByUsername(username);
+        if(user == null) {
             throw new UsernameNotFoundException(String.format("User '%s' not found", username));
         }
-        return user.get();
-//        new org.springframework.security.core.userdetails.User(user.getUsername(),
-//                user.getPassword(), user.getRoles());
-
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+                mapRolesToAuthorities(user.getRoles()));
     }
 
-    //преобразуем нашу коллекцию ролей в коллекцию GrandAuthority
-//    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
-//        return roles.stream().map(r-> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
-        //проблема с методом .collect!
-        //созвониться по поводу этого метода
-
+    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
+        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getRole())).collect(Collectors.toList());
+    }
 }
