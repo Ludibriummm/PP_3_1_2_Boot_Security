@@ -4,25 +4,44 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import ru.kata.spring.boot_security.demo.entities.Role;
 import ru.kata.spring.boot_security.demo.entities.User;
-import ru.kata.spring.boot_security.demo.services.UserServiceImpl;
+import ru.kata.spring.boot_security.demo.services.RoleService;
+import ru.kata.spring.boot_security.demo.services.UserService;
 
 import java.security.Principal;
+import java.util.Set;
 
 @Controller
-@RequestMapping("/user")
 public class UserController {
-    private final UserServiceImpl service;
+    private final UserService service;
+    private final RoleService roleService;
 
     @Autowired
-    public UserController(UserServiceImpl service) {
+    public UserController(UserService service, RoleService roleService) {
         this.service = service;
+        this.roleService = roleService;
     }
 
-    @GetMapping
+    @GetMapping("/registration")
+    public String registrationPage(@ModelAttribute("user") User user) {
+        return "registration";
+    }
+
+    @PostMapping("/registration")
+    public String performRegistration(@ModelAttribute("user") User user) {
+        Role role = new Role("ROLE_USER");
+        roleService.saveRole(role);
+        user.setRoles(Set.of(role));
+        service.saveUser(user);
+        return "redirect:/login";
+    }
+
+    @GetMapping("/user")
     public String userPage(Model model, Principal principal){
-        User userByName = service.findByUsername(principal.getName());
+        User userByName = service.getUserByUsername(principal.getName());
         model.addAttribute("user", userByName);
         model.addAttribute("pageTitle", userByName.getUsername());
         return "userPage";
