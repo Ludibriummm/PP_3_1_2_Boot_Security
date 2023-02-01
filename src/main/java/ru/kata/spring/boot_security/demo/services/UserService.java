@@ -1,62 +1,19 @@
 package ru.kata.spring.boot_security.demo.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import ru.kata.spring.boot_security.demo.entities.Role;
 import ru.kata.spring.boot_security.demo.entities.User;
-import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
+import java.util.List;
 
-import java.util.Collection;
-import java.util.Optional;
-import java.util.stream.Collectors;
+public interface UserService {
+    void saveUser(User user);
 
+    List<User> getAllUsers();
 
-@Service
-public class UserService implements UserDetailsService {
-    private UserRepository userRepository;
+    User getUserById(int id);
 
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    User getUserByUsername(String username);
 
-    public User findByUsername(String username){
-        return userRepository.findByUsername(username); //по умолчанию Optional
-    }
+    void updateUser(int id, User user);
 
-    public User findById(Integer id){
-        return userRepository.findById(id).orElse(null);
-    }
-
-//    @Override
-//    @Transactional
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        Optional<User> user = Optional.ofNullable(findByUsername(username));
-//        if (user.isEmpty()) {
-//            throw new UsernameNotFoundException(String.format("User '%s' not found", username));
-//        }
-//        return user.get();
-//    }
-
-    @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = findByUsername(username);
-        if(user == null) {
-            throw new UsernameNotFoundException(String.format("User '%s' not found", username));
-        }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-                mapRolesToAuthorities(user.getRoles()));
-    }
-
-    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
-        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getRole())).collect(Collectors.toList());
-    }
+    void removeUserById(int id);
 }

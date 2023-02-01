@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${pageTitle}">User</title>
+</head>
+<body>
+<form method="get" action="/logout">
+    <button class="logout">LogOut</button>
+</form>
+<h1>Welcome to you're page! </h1>
+<h3><p th:text="${user}">VALUE</p></h3>
+
+
+    <style>
+        h1{
+            text-align: center;
+            background-color: #594545;
+            border-radius: 25px;
+        }
+        h3{
+            text-align: center;
+        }
+        body{
+            background: #9E7676;
+            color: #FFF8EA;
+        }
+        button{
+            background: none;
+            color: #FFF8EA;
+            border: 0;
+            position: relative;
+            transition: all 500ms ease-in-out;
+        }
+        button:after{
+            content: '';
+
+            transition: inherit;
+
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: #594545;
+
+            position: absolute;
+            top: -50%;
+            left: -10px;
+
+            opacity: 0.6;
+            z-index: -1;
+        }
+        button:hover:after{
+            width: calc(100% + 20px);
+            border-radius: 20px;
+            opacity: 0.9;
+        }
+    </style>
+</body>
+</html>

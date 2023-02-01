@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My first app!</title>
+</head>
+<body link="#FFF8EA" vlink="#E1D7C6">
+<form method="post" action="/logout">
+    <button class="logout">LogOut</button>
+</form>
+    <h1> List of users </h1>
+<div class="userList">
+    <th:block th:each="usr : ${users}">
+       <a th:href="@{/admin/{id}(id=${usr.getId()})}"><h3 th:text="${usr}"></h3></a>
+    </th:block>
+</div>
+<!--<div>-->
+<!--    <p>-->
+<!--        <form method="post" action="delete/all">-->
+<!--        <button class="delete">Delete all users</button>-->
+<!--        </form>-->
+<!--    </p>-->
+<!--</div>-->
+<div>
+    <h2>Add new user:</h2>
+        <form th:method="POST" th:action="@{admin/create}" th:object="${user}">
+            <label for="username">Username</label>
+            <input name="username" type="text" id="username"/>
+            <br>
+            <label for="password">Password</label>
+            <input name="password" type="text" id="password"/>
+            <br>
+            <label for="email">email@gmail.com</label>
+            <input name="email" type="text" id="email"/>
+<!--            <br>-->
+<!--            <label for="role">Login</label>-->
+<!--            <input name="role" type="text" id="role"/>-->
+            <br>
+            <br>
+            <button>Add user</button>
+            <h1>TODO: Add role in form!</h1>
+        </form>
+</div>
+</body>
+<style>
+    h1{
+        text-align: center;
+        background-color: #594545;
+        border-radius: 25px;
+    }
+    h3{
+        text-align: center;
+    }
+    body{
+        background: #9E7676;
+        color: #FFF8EA;
+    }
+    button.delete{
+        float:right;
+    }
+    button{
+        background: none;
+        color: #FFF8EA;
+        border: 0;
+        position: relative;
+        transition: all 500ms ease-in-out;
+    }
+    button:after{
+        content: '';
+
+        transition: inherit;
+
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        background: #594545;
+
+        position: absolute;
+        top: -50%;
+        left: -10px;
+
+        opacity: 0.6;
+        z-index: -1;
+    }
+    button:hover:after{
+        width: calc(100% + 20px);
+        border-radius: 20px;
+        opacity: 0.9;
+    }
+</style>
+</html>
