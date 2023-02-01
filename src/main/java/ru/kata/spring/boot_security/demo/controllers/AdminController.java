@@ -49,26 +49,6 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-//    @PatchMapping(value = "/{id}/update")
-//    public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") int id) {
-//        user.setPassword(user.getPassword());
-//        service.updateUser(id, user);
-//        return "redirect:/admin";
-//    }
-    @GetMapping(value = "/{id}/edit")
-    public String getUserEditForm(@PathVariable("id") int id, Model model) {
-        model.addAttribute("user", service.getUserById(id));
-        model.addAttribute("roles", roleService.getRoles());
-        return "edit_user";
-    }
-
-    @PatchMapping(value = "/{id}")
-    public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") int id) {
-        user.setPassword(user.getPassword());
-        service.updateUser(id, user);
-        return "redirect:/admin";
-    }
-
     @GetMapping("/{id}")
     public String showUserById(@PathVariable("id") int id, Model model){
         model.addAttribute("userById", service.getUserById(id));
@@ -76,6 +56,13 @@ public class AdminController {
         model.addAttribute("pageTitle", service.getUserById(id).getUsername());
         model.addAttribute("roles", roleService.getRoles());
         return "userById";
+    }
+
+    @PostMapping(value = "/{id}/update")
+    public String updateUser(@ModelAttribute("userById") User user, @PathVariable("id") int id) {
+        user.setPassword(user.getPassword());
+        service.updateUser(id, user);
+        return "redirect:/admin";
     }
 
     @DeleteMapping("/{id}/delete")

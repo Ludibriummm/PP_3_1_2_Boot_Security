@@ -11,13 +11,12 @@
 </form>
 <h1>User found by given id: </h1>
 <h3><p th:text="${userById.toString()}">VALUE</p></h3>
-<div>
     <form method="get" th:action="@{/admin/{id}/delete(id=${id})}">
         <button class="delete">Delete this user</button>
     </form>
 
     <p><h2>Edit user:</h2>
-        <form th:method="Patch" th:action="@{/admin/{id}/edit(id=${id})}" th:object="${userById}">
+        <form th:method="post" th:action="@{/admin/{id}/update(id=${id})}" th:object="${userById}">
 
             <label for="username">Enter username</label>
             <input type="text" th:field="*{username}" id="username"/>
@@ -80,6 +79,5 @@
             opacity: 0.9;
         }
     </style>
-</div>
 </body>
 </html>
