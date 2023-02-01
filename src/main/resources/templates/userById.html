@@ -16,19 +16,24 @@
         <button class="delete">Delete this user</button>
     </form>
 
-    <p><h2>Update something:</h2>
-    <form method="post" th:action="@{/admin/{id}/update(id=${id})}" th:object="${userById}">
+    <p><h2>Edit user:</h2>
+    <form method="post" th:action="@{/admin/{id}/edit(id=${id})}" th:object="${userById}">
         <label for="username">Enter new username: </label>
         <input type="text" th:field="*{username}" id="username">
-        <br>
+        <br/>
         <label for="password">Enter new password: </label>
         <input type="text" th:field="*{password}" id="password">
-        <br>
+        <br/>
         <label for="email">Enter new email: </label>
         <input type="text" th:field="*{email}" id="email">
-        <br>
-        <br>
-        <button>Update!</button>
+        <br/>
+<!--        <label for="my_roles">Enter role:</label>-->
+<!--        <select multiple name="my_roles" id="my_roles">-->
+<!--            <option>ROLE_USER</option>-->
+<!--            <option>ROLE_ADMIN</option>-->
+<!--        </select>-->
+<!--        <br/>-->
+        <input type="submit" value="Update"/>
     </form>
     <style>
         h1{

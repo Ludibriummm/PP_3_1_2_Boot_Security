@@ -36,28 +36,51 @@ public class AdminController {
     }
 
     @GetMapping("/{id}/delete")
-    public String deleteUserById(@PathVariable("id")int id, Model model){
+    public String deleteUserById(@PathVariable("id")int id){
         service.removeUserById(id);
         return "redirect:/admin";
     }
 
+//    @GetMapping("/new")
+//    public String getUserCreateForm(@ModelAttribute("user") User user, Model model) {
+//        model.addAttribute("roles", roleService.getRoles());
+//        return "redirect:/admin/create";
+//    }
+//
+//    @PostMapping("/create")
+//    public String createNewUser(@ModelAttribute("user") User user,
+//                                @RequestParam(value = "roleForNewUser") String roleForNewUser){
+//        Role role = new Role(roleForNewUser);
+//        roleService.saveRole(role);
+//        user.setRoles(Set.of(role));
+//        service.saveUser(user);
+//        return "redirect:/admin";
+//    }
+    @GetMapping("/new")
+    public String getUserCreateForm(@ModelAttribute("user") User user) {
+    return "admin";
+}
+
     @PostMapping("/create")
-    public String createNewUser(@ModelAttribute("user") User user,
-                                Model model,
-                                @RequestParam(value = "roleForNewUser") String roleForNewUser){
-        model.addAttribute("roles", roleService.getRoles());
-        Role role = new Role(roleForNewUser);
+    public String createNewUser(@ModelAttribute("user") User user) {
+        Role role = new Role("ROLE_USER");
         roleService.saveRole(role);
         user.setRoles(Set.of(role));
         service.saveUser(user);
         return "redirect:/admin";
     }
 
-    @PatchMapping("/{id}/update")
-    public String update(@ModelAttribute("user") User user,
-                         @PathVariable("id") int id){
-        service.updateUser(id, user);
-        return "redirect:/admin";
+//    @PatchMapping("/{id}/update")
+//    public String update(@ModelAttribute("user") User user,
+//                         @PathVariable("id") int id){
+//        service.updateUser(id, user);
+//        return "redirect:/admin";
+//    }
+    @PatchMapping(value = "/{id}/edit")
+    public String getUserEditForm(@PathVariable("id") int id, Model model) {
+        model.addAttribute("user", service.getUserById(id));
+        model.addAttribute("roles", roleService.getRoles());
+        return "redirect:/";
     }
 }
 
