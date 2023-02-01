@@ -17,24 +17,23 @@
     </form>
 
     <p><h2>Edit user:</h2>
-    <form method="post" th:action="@{/admin/{id}/edit(id=${id})}" th:object="${userById}">
-        <label for="username">Enter new username: </label>
-        <input type="text" th:field="*{username}" id="username">
-        <br/>
-        <label for="password">Enter new password: </label>
-        <input type="text" th:field="*{password}" id="password">
-        <br/>
-        <label for="email">Enter new email: </label>
-        <input type="text" th:field="*{email}" id="email">
-        <br/>
-<!--        <label for="my_roles">Enter role:</label>-->
-<!--        <select multiple name="my_roles" id="my_roles">-->
-<!--            <option>ROLE_USER</option>-->
-<!--            <option>ROLE_ADMIN</option>-->
-<!--        </select>-->
-<!--        <br/>-->
-        <input type="submit" value="Update"/>
-    </form>
+        <form th:method="Patch" th:action="@{/admin/{id}/edit(id=${id})}" th:object="${userById}">
+
+            <label for="username">Enter username</label>
+            <input type="text" th:field="*{username}" id="username"/>
+            <label for="email">Enter email</label>
+            <input type="text" th:field="*{email}" id="email"/>
+            <label for="password">Enter password</label>
+            <input type="password" th:field="*{password}" id="password"/>
+            <br/>
+            <label for="my_roles">Enter role:</label>
+            <select multiple name="my_roles" id="my_roles">
+                <option>ROLE_USER</option>
+                <option>ROLE_ADMIN</option>
+            </select>
+            <br/>
+            <input type="submit" value="Update"/>
+        </form>
     <style>
         h1{
             text-align: center;
