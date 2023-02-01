@@ -15,34 +15,9 @@
        <a th:href="@{/admin/{id}(id=${usr.getId()})}"><h3 th:text="${usr}"></h3></a>
     </th:block>
 </div>
-<!--<div>-->
-<!--    <p>-->
-<!--        <form method="post" action="delete/all">-->
-<!--        <button class="delete">Delete all users</button>-->
-<!--        </form>-->
-<!--    </p>-->
-<!--</div>-->
 <div>
-<!--    <h2>Add new user:</h2>-->
-<!--        <form th:method="POST" th:action="@{/admin/create}" th:object="${user}">-->
-<!--            <label for="username">Username</label>-->
-<!--            <input name="username" type="text" id="username"/>-->
-<!--            <br>-->
-<!--            <label for="password">Password</label>-->
-<!--            <input name="password" type="text" id="password"/>-->
-<!--            <br>-->
-<!--            <label for="email">email@gmail.com</label>-->
-<!--            <input name="email" type="text" id="email"/>-->
-<!--&lt;!&ndash;            <br>&ndash;&gt;-->
-<!--&lt;!&ndash;            <label for="role">Login</label>&ndash;&gt;-->
-<!--&lt;!&ndash;            <input name="role" type="text" id="role"/>&ndash;&gt;-->
-<!--            <br>-->
-<!--            <br>-->
-<!--            <button>Add user</button>-->
-<!--            <h1>TODO: Add role in form!</h1>-->
-<!--        </form>-->
     <form method="get" action="/admin/new">
-        <button class="logout">Add new user</button>
+        <button class="new">Add new user</button>
     </form>
 </div>
 </body>

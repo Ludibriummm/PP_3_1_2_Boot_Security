@@ -5,13 +5,17 @@
     <title>Update person</title>
 </head>
 <body>
-
+<form method="post" action="/logout">
+    <button class="logout">LogOut</button>
+</form>
+<h1>Edit user</h1>
 <form th:method="Patch" th:action="@{/admin/{id}(id=${user.getId()})}" th:object="${user}">
-
     <label for="username">Enter username</label>
     <input type="text" th:field="*{username}" id="username"/>
+    </br>
     <label for="email">Enter email</label>
     <input type="text" th:field="*{email}" id="email"/>
+    </br>
     <label for="password">Enter password</label>
     <input type="password" th:field="*{password}" id="password"/>
     <br/>
@@ -23,10 +27,51 @@
     <br/>
     <input type="submit" value="Update"/>
 </form>
-<br>
-<a th:href="@{/admin}">Back</a>
-<br>
-<br>
-<a href="/logout">Logout</a>
 </body>
+<style>
+    h1{
+        text-align: center;
+        background-color: #594545;
+        border-radius: 25px;
+    }
+    h3{
+        text-align: center;
+    }
+    body{
+        background: #9E7676;
+        color: #FFF8EA;
+    }
+    button.delete{
+        float:right;
+    }
+    button{
+        background: none;
+        color: #FFF8EA;
+        border: 0;
+        position: relative;
+        transition: all 500ms ease-in-out;
+    }
+    button:after{
+        content: '';
+
+        transition: inherit;
+
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        background: #594545;
+
+        position: absolute;
+        top: -50%;
+        left: -10px;
+
+        opacity: 0.6;
+        z-index: -1;
+    }
+    button:hover:after{
+        width: calc(100% + 20px);
+        border-radius: 20px;
+        opacity: 0.9;
+    }
+</style>
 </html>
