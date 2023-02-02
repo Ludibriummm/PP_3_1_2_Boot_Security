@@ -16,4 +16,6 @@ public interface UserService {
     void updateUser(int id, User user);
 
     void removeUserById(int id);
+    void registration(User user);
+    void createUser(User user, String stringRole);
 }
